@@ -1,0 +1,6 @@
+/vendor/
+/storage/cache/*.bladec
+/storage/data/orders.json
+/storage/data/inquiries.json
+.DS_Store
+Thumbs.db

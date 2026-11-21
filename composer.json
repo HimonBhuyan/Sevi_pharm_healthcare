@@ -1,0 +1,10 @@
+{
+    "name": "servipharm/website",
+    "description": "SERVI PHARM HEALTHCARE PRIVATE LIMITED - Corporate & Healthcare Showcase",
+    "type": "project",
+    "require": {
+        "php": "^8.2",
+        "eftec/bladeone": "^5.0"
+    }
+}
+
