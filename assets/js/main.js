@@ -6,6 +6,45 @@
   const catalogList = Array.isArray(window.SERVIPHARM_CATALOG) ? window.SERVIPHARM_CATALOG : [];
   const catalogMap = new Map(catalogList.map((item) => [item.id, item]));
 
+  // ---------------------------------------------------------
+  // 0. Branded Page Loader Dismiss & Back-to-Top Control
+  // ---------------------------------------------------------
+  const pageLoader = document.getElementById('page-loader');
+  if (pageLoader) {
+    const dismissLoader = () => {
+      if (!pageLoader.classList.contains('is-done')) {
+        pageLoader.classList.add('is-done');
+        setTimeout(() => {
+          pageLoader.style.display = 'none';
+        }, 480);
+      }
+    };
+
+    if (prefersReducedMotion.matches) {
+      dismissLoader();
+    } else {
+      window.addEventListener('load', () => {
+        setTimeout(dismissLoader, 420);
+      });
+      // Safety timeout so loader never stays stuck
+      setTimeout(dismissLoader, 1100);
+    }
+  }
+
+  const backToTopBtn = document.getElementById('back-to-top');
+  if (backToTopBtn) {
+    window.addEventListener(
+      'scroll',
+      () => {
+        backToTopBtn.hidden = window.scrollY < 420;
+      },
+      { passive: true }
+    );
+    backToTopBtn.addEventListener('click', () => {
+      window.scrollTo({ top: 0, behavior: prefersReducedMotion.matches ? 'auto' : 'smooth' });
+    });
+  }
+
   const formatINR = (num) => '₹' + new Intl.NumberFormat('en-IN').format(Math.round(Number(num) || 0));
 
   // ---------------------------------------------------------

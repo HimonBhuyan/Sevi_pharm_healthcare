@@ -152,7 +152,7 @@
 
     <!-- Animated Key Metrics Bar -->
     <div class="container">
-        <div class="metrics-bar">
+        <div class="metrics-bar scroll-reveal">
             @foreach(($metrics ?? []) as $metric)
                 <div class="metric-card spotlight-card">
                     <div class="metric-value"
@@ -165,6 +165,17 @@
                     <div class="metric-label">{{ $metric['label'] }}</div>
                 </div>
             @endforeach
+        </div>
+
+        <!-- Animated Scroll-Down Cue -->
+        <div class="hero-scroll-cue-wrap">
+            <a href="#catalog" class="hero-scroll-cue" aria-label="Scroll down to explore products">
+                <span class="scroll-mouse" aria-hidden="true">
+                    <span class="scroll-wheel"></span>
+                </span>
+                <span class="scroll-cue-text">Scroll Down to Explore Storefront</span>
+                <i class="fa-solid fa-chevron-down scroll-chevron" aria-hidden="true"></i>
+            </a>
         </div>
     </div>
 </section>

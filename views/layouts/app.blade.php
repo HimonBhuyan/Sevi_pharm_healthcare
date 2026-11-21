@@ -72,6 +72,32 @@
     <link rel="stylesheet" href="assets/css/style.css?v={{ @filemtime(__DIR__ . '/../../assets/css/style.css') ?: time() }}">
 </head>
 <body>
+    <!-- Branded Healthcare Loading Screen -->
+    <div id="page-loader" class="page-loader" aria-hidden="true">
+        <div class="loader-core">
+            <div class="loader-orbit">
+                <div class="loader-ring"></div>
+                <div class="loader-emblem">
+                    <svg viewBox="0 0 40 40" width="42" height="42" fill="none">
+                        <defs>
+                            <linearGradient id="spLoaderGrad" x1="0" y1="0" x2="40" y2="40" gradientUnits="userSpaceOnUse">
+                                <stop offset="0%" stop-color="#0d9488"/>
+                                <stop offset="100%" stop-color="#0ea5e9"/>
+                            </linearGradient>
+                        </defs>
+                        <rect x="2" y="2" width="36" height="36" rx="11" fill="url(#spLoaderGrad)"/>
+                        <path d="M17 10h6v7h7v6h-7v7h-6v-7h-7v-6h7v-7z" fill="#ffffff"/>
+                    </svg>
+                </div>
+            </div>
+            <div class="loader-brand">ServiPharm <span>Healthcare</span></div>
+            <div class="loader-sub">CIN: {{ $company['cin'] ?? 'U47721MR2026PTC477954' }} • Preparing Storefront...</div>
+            <div class="loader-bar-track">
+                <div class="loader-bar-fill"></div>
+            </div>
+        </div>
+    </div>
+
     <!-- Native Scroll-Driven Progress Indicator -->
     <div id="scroll-progress" class="scroll-progress" aria-hidden="true"></div>
 
@@ -106,6 +132,11 @@
             <i class="fa-solid fa-arrow-right" aria-hidden="true"></i>
         </button>
     </div>
+
+    <!-- Floating Back-to-Top Button -->
+    <button type="button" id="back-to-top" class="back-to-top" aria-label="Scroll back to top" title="Back to Top" hidden>
+        <i class="fa-solid fa-arrow-up" aria-hidden="true"></i>
+    </button>
 
     <!-- Toast Notification Stack -->
     <div id="toast-container" class="toast-container" aria-live="polite" aria-atomic="true"></div>
