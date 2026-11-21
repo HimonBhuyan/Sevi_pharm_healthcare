@@ -1,0 +1,38 @@
+{
+  "version": 2,
+  "functions": {
+    "api/**/*.php": {
+      "runtime": "vercel-php@0.7.3"
+    }
+  },
+  "routes": [
+    {
+      "src": "/assets/(.*)",
+      "dest": "/assets/$1"
+    },
+    {
+      "src": "/api/checkout",
+      "dest": "/api/index.php?action=checkout"
+    },
+    {
+      "src": "/api/inquiry",
+      "dest": "/api/index.php?action=inquiry"
+    },
+    {
+      "src": "/catalog",
+      "dest": "/api/index.php?page=catalog"
+    },
+    {
+      "src": "/checkout",
+      "dest": "/api/index.php?page=checkout"
+    },
+    {
+      "src": "/orders",
+      "dest": "/api/index.php?page=orders"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/api/index.php"
+    }
+  ]
+}

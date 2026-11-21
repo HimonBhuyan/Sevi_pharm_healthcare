@@ -1,0 +1,5 @@
+# Files and directories to ignore when deploying to Vercel
+.git/
+storage/cache/
+storage/data/orders.json
+storage/data/inquiries.json

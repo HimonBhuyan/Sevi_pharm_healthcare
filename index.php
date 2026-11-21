@@ -6,14 +6,23 @@ require_once __DIR__ . '/vendor/autoload.php';
 
 use eftec\bladeone\BladeOne;
 
-$cacheDir = __DIR__ . '/storage/cache';
 $dataDir = __DIR__ . '/storage/data';
+$isServerless = isset($_ENV['VERCEL']) || isset($_SERVER['VERCEL']) || getenv('VERCEL') || !is_writable(__DIR__);
+
+if ($isServerless) {
+    $tempBase = sys_get_temp_dir() . '/servipharm';
+    $cacheDir = $tempBase . '/cache';
+    $runtimeDataDir = $tempBase . '/data';
+} else {
+    $cacheDir = __DIR__ . '/storage/cache';
+    $runtimeDataDir = $dataDir;
+}
 
 if (!is_dir($cacheDir)) {
     @mkdir($cacheDir, 0777, true);
 }
-if (!is_dir($dataDir)) {
-    @mkdir($dataDir, 0777, true);
+if (!is_dir($runtimeDataDir)) {
+    @mkdir($runtimeDataDir, 0777, true);
 }
 
 if (PHP_SAPI !== 'cli' && session_status() === PHP_SESSION_NONE) {
@@ -197,7 +206,7 @@ if ($action === 'checkout' || str_ends_with($requestUri, '/api/checkout')) {
         'ip' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1'
     ];
 
-    $ordersFile = $dataDir . '/orders.json';
+    $ordersFile = $runtimeDataDir . '/orders.json';
     $existingOrders = [];
     if (is_file($ordersFile)) {
         $decoded = json_decode((string) file_get_contents($ordersFile), true);
@@ -283,7 +292,7 @@ if ($action === 'inquiry' || str_ends_with($requestUri, '/api/inquiry')) {
         'ip' => $_SERVER['REMOTE_ADDR'] ?? '127.0.0.1'
     ];
 
-    $inquiriesFile = $dataDir . '/inquiries.json';
+    $inquiriesFile = $runtimeDataDir . '/inquiries.json';
     $existing = [];
     if (is_file($inquiriesFile)) {
         $decoded = json_decode((string) file_get_contents($inquiriesFile), true);
@@ -309,7 +318,7 @@ $siteData['csrf_token'] = $csrfToken;
 $siteData['current_year'] = date('Y');
 
 // Load Stored Orders for Order Tracking / Invoice View
-$ordersFile = $dataDir . '/orders.json';
+$ordersFile = $runtimeDataDir . '/orders.json';
 $allOrders = [];
 if (is_file($ordersFile)) {
     $decoded = json_decode((string) file_get_contents($ordersFile), true);
